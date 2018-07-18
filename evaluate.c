@@ -117,7 +117,7 @@ void printchain() {
 
         if(Pointer->type == value)
 
-            printf("%f",Pointer->number);
+            printf("%lf",Pointer->number);
 
         else
 
