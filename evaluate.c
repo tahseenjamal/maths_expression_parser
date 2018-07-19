@@ -126,20 +126,29 @@ void printchain() {
             snprintf(stringvalue, index, "%lf", Pointer->number);
 
             while(stringvalue[--index] == '0' || stringvalue[index] == '\0' || stringvalue[index] == '.')
+            {
+                char last = stringvalue[index];
 
                 stringvalue[index] = '\0';
 
+                if(last == '.')
+
+                    break;
+            }
+
             printf("Result: %s",stringvalue);
+
+
+            /*printf("%lf",Pointer->number);*/
 
         }
         else
         {
 
-            printf("Error in expression");
+            /*printf("Error in expression");*/
 
-            /*printf("%c",Pointer->operator);*/
+            printf("%c",Pointer->operator);
 
-            break;
         }
    
         Pointer = Pointer->next;
@@ -232,6 +241,8 @@ void parse(Node **head, Node **tail, char ops) {
         }
 
     } 
+
+    /*printchain();*/
 
 }
 
