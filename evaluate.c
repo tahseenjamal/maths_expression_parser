@@ -8,7 +8,7 @@ typedef enum {bracket, operator, value} Object;
 
 typedef struct Node {
 
-    unsigned char level;
+    /*unsigned char level;*/
 
     union {
 
