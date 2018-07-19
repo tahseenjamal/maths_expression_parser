@@ -381,9 +381,6 @@ void extract(const char* string) {
 
             createnode(value, number, '~');
 
-            // set a sign flag if the - sign 
-            // !(tail is NULL or ')')
-            // Don't pass - in list and reset this sign flag once upcoming number is multiplied with -1 and set
 
         }
 
