@@ -2,21 +2,19 @@ This is a custom algorithm written by me in C using linked list to parse mathema
 
 Space and quotes are internally processed and managed
 
-Decimal numbers are supported
+Supported Numbers: +ve, -ve, decimal
 
-Operators allowed are round brackets, multiply and plus
+Supported Operators: Multi-Bracket, Divide, Multiply, Plus, Minus
 
-Logic is simple that one can experiment and add >, <, power, divide, minus 
+No error check for incorrectly done brackets or operators
 
-Currently haven't added unbalanced bracket check. It is a simple algo in case you want to add
-
-
-Program compiled on Debian 9 using gcc. Below is the way to compile and use the program
-
+Tested on latest - FreeBSD and Debian
 
 gcc -o evaluate evaluate.c
 
 
 ./evaluate "3 * ( 1 + 2 ) * 2 * ( 3.5 + 4.5 )"
+
+./evaluate "3 * ( -1 + 2 ) * -2 * 4.8"
 
 

@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -116,12 +117,28 @@ void printchain() {
     {
 
         if(Pointer->type == value)
+        {
 
-            printf("%lf",Pointer->number);
+            int index = snprintf(NULL, 0, "%lf", Pointer->number);
 
+            char *stringvalue = (char*) malloc(sizeof(char) * ++index);
+
+            snprintf(stringvalue, index, "%lf", Pointer->number);
+
+            while(stringvalue[--index] == '0' || stringvalue[index] == '\0' || stringvalue[index] == '.')
+
+                stringvalue[index] = '\0';
+
+            printf("Result: %s",stringvalue);
+
+        }
         else
+        {
 
-            printf("%c",Pointer->operator);
+            printf("\nError in expression");
+
+            /*printf("%c",Pointer->operator);*/
+        }
    
         Pointer = Pointer->next;
 
@@ -141,11 +158,15 @@ void parse(Node **head, Node **tail, char ops) {
     double result;
 
 
-    while(*head != *tail && Pointer != NULL)
+    while(*head != *tail && Pointer != *tail  )
     {
         
         if(Pointer->type == operator && Pointer->operator == ops && Pointer->prev->type != bracket && Pointer->next->type != bracket)
         {
+
+            if(ops == '/' && Pointer->operator == ops)
+
+                result = Pointer->prev->number / Pointer->next->number;
 
             if(ops == '*' && Pointer->operator == ops)
 
@@ -154,6 +175,11 @@ void parse(Node **head, Node **tail, char ops) {
             if(ops == '+' && Pointer->operator == ops)
 
                 result = Pointer->prev->number + Pointer->next->number;
+
+            if(ops == '-' && Pointer->operator == ops)
+
+                result = Pointer->prev->number - Pointer->next->number;
+
 
             Pointer->number = result;
 
@@ -223,7 +249,7 @@ void parsebl(Node **head, Node **tail, char open, char close, char ops) {
             Start = Pointer;
 
         }
-
+        
         if(Start->operator == open && Pointer->operator == close)
         {
 
@@ -305,7 +331,7 @@ int flushbracket(Node **head, Node **tail) {
 
 }
 
-char* extract(const char* string) {
+void extract(const char* string) {
 
     int index = 0, in = 0;
 
@@ -325,32 +351,61 @@ char* extract(const char* string) {
         index++;
     }
 
+    bool negativenumber = false;
 
     while(*input) {
 
-        if (isdigit(*input)) {
-            
+        if (isdigit(*input)) 
+        {
             double number = strtod(input, &input);
 
+            if(negativenumber == true) {
+
+                number = -1.0 * number;
+
+                negativenumber = false;
+            }
+
             createnode(value, number, '~');
+
+            // set a sign flag if the - sign 
+            // !(tail is NULL or ')')
+            // Don't pass - in list and reset this sign flag once upcoming number is multiplied with -1 and set
+
         }
 
-        else {
+        else 
+        {
 
             char c = input[0];
 
-            switch(c) {
+            if((Head == NULL || Tail->operator == '(' || Tail->type == operator) && c == '-')
+            {
+                
+                negativenumber = true;
 
-                case '(': createnode(bracket, 0, '('); break;
+            }
 
-                case ')': createnode(bracket, 0, ')'); break;
+            else 
+            {
 
-                case '*':  createnode(operator, 0, '*');break;
+                switch(c) {
 
-                case '+':  createnode(operator, 0, '+');break;
+                    case '(': createnode(bracket, 0, '('); break;
 
-                default: break;
+                    case ')': createnode(bracket, 0, ')'); break;
 
+                    case '/':  createnode(operator, 0, '/');break;
+
+                    case '*':  createnode(operator, 0, '*');break;
+
+                    case '+':  createnode(operator, 0, '+');break;
+
+                    case '-':  createnode(operator, 0, '-');break;
+
+                    default: break;
+
+                }
             }
 
             input++;
@@ -366,9 +421,12 @@ void processchain() {
 
     while(1)
     {
-        /*printchain();*/
+
+        parsebl(&Head, &Tail, '(', ')', '/');
 
         parsebl(&Head, &Tail, '(', ')', '*');
+
+        parsebl(&Head, &Tail, '(', ')', '-');
 
         parsebl(&Head, &Tail, '(', ')', '+');
 
@@ -379,7 +437,11 @@ void processchain() {
     
     }
 
+    parse(&Head, &Tail, '/');
+
     parse(&Head, &Tail, '*');
+
+    parse(&Head, &Tail, '-');
 
     parse(&Head, &Tail, '+');
 
@@ -392,7 +454,7 @@ void processchain() {
 int main(int argc, char const *argv[]) {
 
     extract(&argv[1][0]);
-    
+
     processchain();
 
     return 1;
