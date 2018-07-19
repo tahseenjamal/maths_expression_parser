@@ -116,7 +116,7 @@ void printchain() {
     while(Pointer != NULL)
     {
 
-        if(Pointer->type == value)
+        if(Pointer->type == value && Head == Tail)
         {
 
             int index = snprintf(NULL, 0, "%lf", Pointer->number);
@@ -135,9 +135,11 @@ void printchain() {
         else
         {
 
-            printf("\nError in expression");
+            printf("Error in expression");
 
             /*printf("%c",Pointer->operator);*/
+
+            break;
         }
    
         Pointer = Pointer->next;

@@ -6,7 +6,7 @@ Supported Numbers: +ve, -ve, decimal
 
 Supported Operators: Multi-Bracket, Divide, Multiply, Plus, Minus
 
-No error check for incorrectly done brackets or operators
+Basic error in case expression is incorrect
 
 Tested on latest - FreeBSD and Debian
 
