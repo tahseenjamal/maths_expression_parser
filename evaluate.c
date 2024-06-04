@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 typedef enum {bracket, operator, value} Object;
 
@@ -174,6 +175,9 @@ void parse(Node **head, Node **tail, char ops) {
         
         if(Pointer->type == operator && Pointer->operator == ops && Pointer->prev->type != bracket && Pointer->next->type != bracket)
         {
+            if(ops == '^' && Pointer->operator == ops)
+
+                result = pow(Pointer->prev->number , Pointer->next->number);
 
             if(ops == '/' && Pointer->operator == ops)
 
@@ -405,6 +409,8 @@ void extract(const char* string) {
 
                     case ')': createnode(bracket, 0, ')'); break;
 
+                    case '^':  createnode(operator, 0, '^');break;
+
                     case '/':  createnode(operator, 0, '/');break;
 
                     case '*':  createnode(operator, 0, '*');break;
@@ -432,6 +438,8 @@ void processchain() {
     while(1)
     {
 
+        parsebl(&Head, &Tail, '(', ')', '^');
+
         parsebl(&Head, &Tail, '(', ')', '/');
 
         parsebl(&Head, &Tail, '(', ')', '*');
@@ -446,6 +454,8 @@ void processchain() {
 
     
     }
+
+    parse(&Head, &Tail, '^');
 
     parse(&Head, &Tail, '/');
 

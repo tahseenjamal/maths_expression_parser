@@ -19,5 +19,7 @@ gcc -o evaluate evaluate.c
 
 ./evaluate "3 * ( 1 + 2 ) + 6 * ( 2 + 3 * ( 3 + 4 ) )"
 
+./evaluate "( 1 + 2 ) ^ 2 + 6 * ( 2 + 3 * ( 3 ^ 2 + 4 ) )"
+
 
 Note space and quotes are ignored so doesn't matter
