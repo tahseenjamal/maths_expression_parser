@@ -21,5 +21,12 @@ gcc -o evaluate evaluate.c
 
 ./evaluate "( 1 + 2 ) ^ 2 + 6 * ( 2 + 3 * ( 3 ^ 2 + 4 ) )"
 
+You can even use & | < > =
+Currently >= and <= is supported but can be easily implemented 
+
+Using greater sign between the two expressions
+
+./evaluate "( 1 + 2 ) ^ 2 > ( 3 ^ 2 + 4 )"
+
 
 Note space and quotes are ignored so doesn't matter

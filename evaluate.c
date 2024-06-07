@@ -195,6 +195,25 @@ void parse(Node **head, Node **tail, char ops) {
 
                 result = Pointer->prev->number - Pointer->next->number;
 
+            if(ops == '&' && Pointer->operator == ops)
+
+                result = Pointer->prev->number && Pointer->next->number;
+
+            if(ops == '|' && Pointer->operator == ops)
+
+                result = Pointer->prev->number || Pointer->next->number;
+
+            if(ops == '>' && Pointer->operator == ops) 
+
+                result = Pointer->prev->number > Pointer->next->number;
+
+            if(ops == '<' && Pointer->operator == ops)
+
+                result = Pointer->prev->number < Pointer->next->number;
+
+            if(ops == '=' && Pointer->operator == ops)
+
+                result = Pointer->prev->number = Pointer->next->number;
 
             Pointer->number = result;
 
@@ -419,6 +438,16 @@ void extract(const char* string) {
 
                     case '-':  createnode(operator, 0, '-');break;
 
+                    case '&':  createnode(operator, 0, '&');break;
+
+                    case '|':  createnode(operator, 0, '|');break;
+
+                    case '>':  createnode(operator, 0, '>');break;
+
+                    case '<':  createnode(operator, 0, '<');break;
+
+                    case '=':  createnode(operator, 0, '=');break;
+
                     default: break;
 
                 }
@@ -448,6 +477,16 @@ void processchain() {
 
         parsebl(&Head, &Tail, '(', ')', '+');
 
+        parsebl(&Head, &Tail, '(', ')', '&');
+
+        parsebl(&Head, &Tail, '(', ')', '|');
+
+        parsebl(&Head, &Tail, '(', ')', '<');
+
+        parsebl(&Head, &Tail, '(', ')', '>');
+
+        parsebl(&Head, &Tail, '(', ')', '=');
+
         if(!flushbracket(&Head, &Tail))
 
             break;
@@ -464,6 +503,16 @@ void processchain() {
     parse(&Head, &Tail, '-');
 
     parse(&Head, &Tail, '+');
+
+    parse(&Head, &Tail, '&');
+
+    parse(&Head, &Tail, '|');
+
+    parse(&Head, &Tail, '>');
+
+    parse(&Head, &Tail, '<');
+
+    parse(&Head, &Tail, '=');
 
     printchain();
 
