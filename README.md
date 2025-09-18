@@ -1,32 +1,33 @@
-This is a custom algorithm written by me in C using linked list to parse mathematical expressions
+# Maths Expression Parser in C
 
-Space and quotes are internally processed and managed
+This project is a **custom algorithm** written in C that parses and evaluates mathematical expressions using a **linked list–based approach**.  
 
-Supported Numbers: +ve, -ve, decimal
+It provides a lightweight parser that handles numbers, operators, and brackets with basic error detection.
 
-Supported Operators: Multi-Bracket, Divide, Multiply, Plus, Minus
+---
 
-Basic error in case expression is incorrect
+## 🚀 Features
 
-Tested on latest - FreeBSD and Debian
+- **Custom parsing algorithm** (no external libraries, pure C implementation).  
+- **Internally managed spaces and quotes** — input can include whitespace freely.  
+- **Supported Numbers**:  
+  - Positive (`5`, `123`)  
+  - Negative (`-7`, `-3.5`)  
+  - Decimal (`3.14`, `-2.71`)  
+- **Supported Operators**:  
+  - Multi-bracket expressions `( … )`, `(( … ))`, etc.  
+  - Division `/`  
+  - Multiplication `*`  
+  - Addition `+`  
+  - Subtraction `-`  
+- **Error Handling**:  
+  - Detects basic syntax errors (e.g., unmatched brackets, invalid operators).  
 
+---
+
+## 🛠️ Build Instructions
+
+Tested on **FreeBSD (latest)** and **Debian (latest)** with `gcc`.
+
+```bash
 gcc -o evaluate evaluate.c
-
-
-./evaluate "3 * ( 1 + 2 ) * 2 * ( 3.5 + 4.5 )"
-
-./evaluate "3 * ( -1 + 2 ) * -2 * 4.8"
-
-./evaluate "3 * ( 1 + 2 ) + 6 * ( 2 + 3 * ( 3 + 4 ) )"
-
-./evaluate "( 1 + 2 ) ^ 2 + 6 * ( 2 + 3 * ( 3 ^ 2 + 4 ) )"
-
-You can even use & | < > =
-Currently >= and <= is supported but can be easily implemented 
-
-Using greater sign between the two expressions
-
-./evaluate "( 1 + 2 ) ^ 2 > ( 3 ^ 2 + 4 )"
-
-
-Note space and quotes are ignored so doesn't matter
